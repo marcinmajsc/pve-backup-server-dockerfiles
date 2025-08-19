@@ -27,7 +27,6 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
     - name: Set repository name
-      if: vars.DOCKERHUB_TEST_REGISTRY
       run:
         echo "REGISTRY=${{ vars.DOCKERHUB_TEST_REGISTRY }}" >> $GITHUB_ENV;
         if [[ -n "${{ github.event.pull_request.number }}" ]]; then
@@ -48,14 +47,12 @@ jobs:
 
     # Push to DockerHub
     - name: Login to Docker Hub
-      if: vars.DOCKERHUB_TEST_REGISTRY
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
     - name: Run dockerhub for ${{matrix.arch}}
-      if: vars.DOCKERHUB_TEST_REGISTRY
       run: ./release.bash "${{ env.REGISTRY }}:${{ env.TAG }}" push-image
 
   client-build:
@@ -80,9 +77,8 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
     - name: Set repository name
-      if: vars.DOCKERHUB_TEST_REGISTRY
       run:
-        echo "REGISTRY=${{ vars.DOCKERHUB_TEST_REGISTRY }}" >> $GITHUB_ENV;
+        echo "REGISTRY=ghcr.io" >> $GITHUB_ENV;
         if [[ -n "${{ github.event.pull_request.number }}" ]]; then
           echo "TAG=github-pr-${{ github.event.pull_request.number }}" >> $GITHUB_ENV;
         else
@@ -106,7 +102,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Set repository name
-      if: vars.DOCKERHUB_TEST_REGISTRY
       run:
         echo "REGISTRY=${{ vars.DOCKERHUB_TEST_REGISTRY }}" >> $GITHUB_ENV;
         if [[ -n "${{ github.event.pull_request.number }}" ]]; then
@@ -115,17 +110,16 @@ jobs:
           echo "TAG=ref-${{ github.ref_name }}" >> $GITHUB_ENV;
         fi
     - name: Login to Docker Hub
-      if: vars.DOCKERHUB_TEST_REGISTRY
       uses: docker/login-action@v3
       with:
-        username: ${{ secrets.DOCKERHUB_TEST_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TEST_TOKEN }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Run dockerhub-manifest
       run: ./release.bash "${{ env.REGISTRY }}:${{ env.TAG }}" manifest
     - name: Comment image name on PR
-      if: vars.DOCKERHUB_TEST_REGISTRY && github.event_name == 'pull_request'
+      if: github.event_name == 'pull_request'
       env:
-        REGISTRY: ${{ env.REGISTRY }}
+        REGISTRY: "ghcr.io"
         TAG: ${{ env.TAG }}
       uses: actions/github-script@v7
       with:
