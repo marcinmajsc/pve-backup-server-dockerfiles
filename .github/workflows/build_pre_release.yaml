@@ -12,7 +12,7 @@ on:
         default: 1
 
 env:
-  REGISTRY: "marcinmajsc/pve-backup-server-dockerfiles"
+  REGISTRY: "ghcr.io/marcinmajsc/pve-backup-server-dockerfiles"
   TAG: ${{ inputs.TAG }}
 
 jobs:
