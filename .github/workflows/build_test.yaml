@@ -51,8 +51,9 @@ jobs:
       if: vars.DOCKERHUB_TEST_REGISTRY
       uses: docker/login-action@v3
       with:
-        username: ${{ secrets.DOCKERHUB_TEST_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TEST_TOKEN }}
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     - name: Run dockerhub for ${{matrix.arch}}
       if: vars.DOCKERHUB_TEST_REGISTRY
       run: ./release.bash "${{ env.REGISTRY }}:${{ env.TAG }}" push-image
