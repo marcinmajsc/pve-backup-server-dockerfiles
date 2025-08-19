@@ -28,7 +28,7 @@ jobs:
       uses: docker/setup-qemu-action@v2
     - name: Set repository name
       run:
-        echo "REGISTRY=${{ vars.DOCKERHUB_TEST_REGISTRY }}" >> $GITHUB_ENV;
+        echo "REGISTRY=ghcr.io" >> $GITHUB_ENV;
         if [[ -n "${{ github.event.pull_request.number }}" ]]; then
           echo "TAG=github-pr-${{ github.event.pull_request.number }}" >> $GITHUB_ENV;
         else
