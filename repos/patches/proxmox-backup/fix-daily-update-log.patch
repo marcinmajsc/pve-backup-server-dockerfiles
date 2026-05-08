@@ -1,21 +1,20 @@
 diff --git a/src/bin/proxmox-daily-update.rs b/src/bin/proxmox-daily-update.rs
 --- a/src/bin/proxmox-daily-update.rs
 +++ b/src/bin/proxmox-daily-update.rs
-@@ -1,4 +1,7 @@
+@@ -1,5 +1,6 @@
  use anyhow::Error;
-+use std::fs::OpenOptions;
-+use std::io::Write;
-+use std::os::unix::io::AsRawFd;
- 
  use serde_json::json;
++use std::io::Write;
  
-@@ -124,16 +127,48 @@ async fn run(rpcenv: &mut dyn RpcEnvironment) -> Result<(), Error> {
+ use proxmox_notify::context::pbs::PBS_CONTEXT;
+ use proxmox_router::{cli::*, ApiHandler, RpcEnvironment};
+@@ -111,15 +112,42 @@ async fn run(rpcenv: &mut dyn RpcEnvironment) -> Result<(), Error> {
      do_update(rpcenv).await
  }
  
-+static LOGGER: ContainerLogger = ContainerLogger;
-+
 +struct ContainerLogger;
++
++static LOGGER: ContainerLogger = ContainerLogger;
 +
 +impl log::Log for ContainerLogger {
 +    fn enabled(&self, metadata: &log::Metadata<'_>) -> bool {
@@ -23,29 +22,23 @@ diff --git a/src/bin/proxmox-daily-update.rs b/src/bin/proxmox-daily-update.rs
 +    }
 +
 +    fn log(&self, record: &log::Record<'_>) {
-+        if self.enabled(record.metadata()) {
-+            let mut stderr = std::io::stderr().lock();
-+            let _ = writeln!(stderr, "{}", record.args());
++        if !self.enabled(record.metadata()) {
++            return;
++        }
++
++        if let Ok(mut output) = std::fs::OpenOptions::new()
++            .write(true)
++            .open("/proc/1/fd/1")
++        {
++            let _ = writeln!(output, "{}: {}", record.level(), record.args());
 +        }
 +    }
 +
 +    fn flush(&self) {}
 +}
 +
-+fn init_container_logger() -> Result<(), Error> {
-+    let output = OpenOptions::new().write(true).open("/proc/1/fd/1")?;
-+    let output_fd = output.as_raw_fd();
-+
-+    if unsafe { libc::dup2(output_fd, libc::STDOUT_FILENO) } == -1 {
-+        return Err(std::io::Error::last_os_error().into());
-+    }
-+
-+    if unsafe { libc::dup2(output_fd, libc::STDERR_FILENO) } == -1 {
-+        return Err(std::io::Error::last_os_error().into());
-+    }
-+
-+    log::set_logger(&LOGGER)
-+        .map_err(|err| anyhow::format_err!("unable to initialize logger - {err}"))?;
++fn init_container_logger() -> Result<(), log::SetLoggerError> {
++    log::set_logger(&LOGGER)?;
 +    log::set_max_level(log::LevelFilter::Info);
 +
 +    Ok(())
@@ -54,14 +47,13 @@ diff --git a/src/bin/proxmox-daily-update.rs b/src/bin/proxmox-daily-update.rs
  fn main() {
      proxmox_backup::tools::setup_safe_path_env();
  
--    if let Err(err) = syslog::init(
--        syslog::Facility::LOG_DAEMON,
--        log::LevelFilter::Info,
--        Some("proxmox-daily-update"),
--    ) {
--        eprintln!("unable to initialize syslog - {err}");
-+    if let Err(err) = init_container_logger() {
-+        eprintln!("unable to initialize container logger - {err}");
-     }
+-    // We need to use the tasklog layer here because we call a workertask.
+-    proxmox_log::Logger::from_env("PBS_LOG", proxmox_log::LevelFilter::INFO)
+-        .journald_on_no_workertask()
+-        .tasklog_pbs()
+-        .init()
+-        .expect("unable to initialize logger");
++    init_container_logger().expect("unable to initialize logger");
  
      let mut rpcenv = CliEnvironment::new();
+     rpcenv.set_auth_id(Some(String::from("root@pam")));
