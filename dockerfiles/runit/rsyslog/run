@@ -1,0 +1,8 @@
+#!/bin/bash
+
+mkdir -p /run/rsyslog /var/spool/rsyslog
+
+rm -f /dev/log
+
+echo "RSYSLOGD: Starting..."
+exec rsyslogd -n -iNONE -f /runit/rsyslog/rsyslog.conf

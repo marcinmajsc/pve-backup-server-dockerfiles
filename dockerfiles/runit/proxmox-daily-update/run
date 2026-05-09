@@ -2,5 +2,9 @@
 
 ln -sf /usr/lib/*/proxmox-backup/proxmox-daily-update /etc/cron.daily/
 
+while [ ! -S /dev/log ]; do
+    sleep 0.2
+done
+
 echo "CRON: Starting..."
 exec cron -f

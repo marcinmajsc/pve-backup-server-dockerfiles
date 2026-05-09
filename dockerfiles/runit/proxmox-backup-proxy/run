@@ -5,5 +5,9 @@ if [[ ! -e /etc/proxmox-backup/csrf.key ]]; then
   exit 1
 fi
 
+while [ ! -S /dev/log ]; do
+    sleep 0.2
+done
+
 echo "PROXY: Starting..."
 exec chpst -u backup:backup /usr/lib/*/proxmox-backup/proxmox-backup-proxy
