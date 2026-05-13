@@ -6,7 +6,7 @@ echo "RSYSLOGD: Starting..."
 mkdir -p /run/rsyslog /var/spool/rsyslog /var/log/proxmox-backup
 rm -f /dev/log
 touch /var/log/proxmox-backup/syslog.log
-cp /runit/rsyslog/rsyslog.conf /etc/rsyslog.conf
+cp -f /runit/rsyslog/rsyslog.conf /etc/rsyslog.conf
 
 rsyslogd -n -iNONE -f /etc/rsyslog.conf &
 exec tail -n 0 -F /var/log/proxmox-backup/syslog.log
