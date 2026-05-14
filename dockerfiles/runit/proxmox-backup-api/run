@@ -35,9 +35,5 @@ if ! mountpoint /run; then
   echo "WARNING: The '/run' should be 'tmpfs' mountpoint. PBS might not work correctly."
 fi
 
-while [ ! -S /dev/log ]; do
-    sleep 0.2
-done
-
 echo "API: Starting..."
 exec /usr/lib/*/proxmox-backup/proxmox-backup-api

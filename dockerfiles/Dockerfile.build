@@ -80,7 +80,6 @@ RUN --mount=type=bind,from=deb_env,source=/release,target=/release,ro \
   export DEBIAN_FRONTEND=noninteractive && \
   apt-get -y update && \
   apt-get install -y runit ssmtp cron && \
-  apt-get install -y --no-install-recommends rsyslog && \
   /release/install && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
