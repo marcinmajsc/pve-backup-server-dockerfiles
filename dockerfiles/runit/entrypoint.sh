@@ -41,10 +41,7 @@ fi
 ##############################
 # Check and add missing dirs #
 ##############################
-mkdir -p /run/proxmox-backup
 mkdir -p /run/systemd/journal
-mkdir -p /run/lock
-chown -R backup:backup /run/proxmox-backup 2>/dev/null || true
 
 # Provide the journald socket path expected by libsystemd callers.
 # In this container /dev/log already exists, but /run/systemd/journal/socket
@@ -53,13 +50,6 @@ chown -R backup:backup /run/proxmox-backup 2>/dev/null || true
 if [ ! -e /run/systemd/journal/socket ]; then
     ln -s /dev/log /run/systemd/journal/socket
 fi
-
-###################
-# Remove old lock #
-###################
-find /etc/proxmox-backup \
-  \( -name "*.lock" -o -name ".*.lck" \) \
-  -type f -delete 2>/dev/null || true
 
 #########
 # START #
