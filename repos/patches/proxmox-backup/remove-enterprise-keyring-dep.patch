@@ -1,0 +1,11 @@
+diff --git a/debian/control b/debian/control
+--- a/debian/control
++++ b/debian/control
+@@ -213,7 +213,6 @@ Depends: dmidecode,
+          pciutils,
+          postfix | mail-transport-agent,
+          proxmox-backup-docs,
+-         proxmox-enterprise-support-keyring,
+          proxmox-mini-journalreader (>= 1.7),
+          proxmox-termproxy (>= 2.0.3),
+          proxmox-widget-toolkit (>= 5.2.1),
