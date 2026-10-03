@@ -41,6 +41,5 @@ jobs:
       with:
         tag: ${{ env.TAG }}
         allowUpdates: true
-        updateOnlyUnreleased: true
         omitBodyDuringUpdate: true
         omitNameDuringUpdate: true
