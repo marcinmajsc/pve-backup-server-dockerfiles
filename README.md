@@ -1,4 +1,4 @@
-# Proxmox Backup Server in a Container
+# Proxmox Backup Server in a FORK Container
 
 [![GitHub Packages image version](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fgithub.com%2Fmarcinmajsc%2Fpve-backup-server-dockerfiles%2Fpkgs%2Fcontainer%2Fpve-backup-server-dockerfiles&search=value%3D%22docker%20pull%20ghcr.io%2Fmarcinmajsc%2Fpve-backup-server-dockerfiles%3A%28%5B%5E%22%40%5D%2B%29%22&replace=%241&label=GHCR%20version&logo=github&color=blue)](https://github.com/marcinmajsc/pve-backup-server-dockerfiles/pkgs/container/pve-backup-server-dockerfiles) [![GitHub Packages image version (amd64)](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fgithub.com%2Fmarcinmajsc%2Fpve-backup-server-dockerfiles%2Fpkgs%2Fcontainer%2Fpve-backup-server-dockerfiles&search=%5C%3Ftag%3D%28%5B%5E%22%26%5D%2B%29-amd64%22&replace=%241&label=GHCR%20amd64&logo=github&color=blue)](https://github.com/marcinmajsc/pve-backup-server-dockerfiles/pkgs/container/pve-backup-server-dockerfiles) [![GitHub Packages image version (arm64)](https://img.shields.io/badge/dynamic/regex?url=https%3A%2F%2Fgithub.com%2Fmarcinmajsc%2Fpve-backup-server-dockerfiles%2Fpkgs%2Fcontainer%2Fpve-backup-server-dockerfiles&search=%5C%3Ftag%3D%28%5B%5E%22%26%5D%2B%29-arm64%22&replace=%241&label=GHCR%20arm64&logo=github&color=blue)](https://github.com/marcinmajsc/pve-backup-server-dockerfiles/pkgs/container/pve-backup-server-dockerfiles)
 
@@ -8,7 +8,7 @@ to run it in a container for AMD64 and ARM64.
 Running in a container might result in some functions not working
 properly. Feel free to create an issue to debug those.
 
-## Buy me a Coffee
+## Buy Coffee for author
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y8GCP24)
 
