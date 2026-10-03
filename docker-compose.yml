@@ -1,8 +1,8 @@
-version: '2.1'
+version: '3.0'
 
 services:
   pbs:
-    image: ${IMAGE:-marcinmajsc/proxmox-backup-server:${TAG:-latest}}
+    image: ghcr.io/marcinmajsc/pve-backup-server-dockerfiles:${TAG:-latest}
     ports:
       - 8007:8007
     mem_limit: 2G
