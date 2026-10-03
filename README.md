@@ -23,19 +23,16 @@ If you found it useful :)
 ## Pre-built images
 
 For starting quickly all images are precompiled and hosted
-at https://hub.docker.com/r/ayufan/proxmox-backup-server.
+at https://github.com/marcinmajsc/pve-backup-server-dockerfiles/pkgs/container/pve-backup-server-dockerfiles.
 
 Or:
 
 ```bash
 # Latest stable / release tag
-docker pull ayufan/proxmox-backup-server:latest
-
-# Latest pre-release / beta tag
-docker pull ayufan/proxmox-backup-server:beta
+docker pull ghcr.io/marcinmajsc/pve-backup-server-dockerfiles:latest
 ```
 
-Each [GitHub Releases](https://github.com/ayufan/pve-backup-server-dockerfiles/releases) includes the following binary assets:
+Each [GitHub Releases](https://github.com/marcinmajsc/pve-backup-server-dockerfiles/releases) includes the following binary assets:
 
 - `proxmox-backup-server-*.tgz` - contains all archived debian installation files with the `./install` script
 - `proxmox-backup-client-*.tgz` - contains a statically linked proxmox backup client
@@ -43,15 +40,8 @@ Each [GitHub Releases](https://github.com/ayufan/pve-backup-server-dockerfiles/r
 ## Run
 
 ```bash
-wget https://raw.githubusercontent.com/ayufan/pve-backup-server-dockerfiles/refs/heads/main/docker-compose.yml
+wget https://raw.githubusercontent.com/marcinmajsc/pve-backup-server-dockerfiles/refs/heads/MOD/docker-compose.yml
 docker-compose up -d
-```
-
-**Run beta variant:**
-
-```bash
-wget https://raw.githubusercontent.com/ayufan/pve-backup-server-dockerfiles/refs/heads/main/docker-compose.yml
-TAG=beta docker-compose up -d
 ```
 
 Then login to `https://<ip>:8007/` with `admin / pbspbs`.
@@ -69,7 +59,7 @@ The core features should work, but there are ones do not work due to container a
 
 ## Changelog
 
-See [Releases](https://github.com/ayufan/pve-backup-server-dockerfiles/releases).
+See [Releases](https://github.com/marcinmajsc/pve-backup-server-dockerfiles/releases).
 
 ## Configure
 
@@ -173,12 +163,12 @@ volumes:
 
 Docker is convienient, but in some cases it might be simply better to install natively.
 
-You can pull compiled `*.deb` files from [GitHub Releases](https://github.com/ayufan/pve-backup-server-dockerfiles/releases).
+You can pull compiled `*.deb` files from [GitHub Releases](https://github.com/marcinmajsc/pve-backup-server-dockerfiles/releases).
 
 Replace the `v4.0.12` with the latest version.
 
 ```bash
-wget https://github.com/ayufan/pve-backup-server-dockerfiles/releases/download/v4.0.12/proxmox-backup-server-v4.0.12-$(dpkg --print-architecture).tgz
+wget https://github.com/marcinmajsc/pve-backup-server-dockerfiles/releases/download/v4.0.12/proxmox-backup-server-v4.0.12-$(dpkg --print-architecture).tgz
 tar zxf proxmox-backup-server-*.tgz
 proxmox-backup-server-*/install
 ```
@@ -188,7 +178,7 @@ proxmox-backup-server-*/install
 Similar to server, the client binary is available for various architectures. The `arm32` is considered unstable, and should only be able to backup, but likely cannot be used to restore data.
 
 ```bash
-wget https://github.com/ayufan/pve-backup-server-dockerfiles/releases/download/v4.0.12/proxmox-backup-client-v4.0.12-$(dpkg --print-architecture).tgz
+wget https://github.com/marcinmajsc/pve-backup-server-dockerfiles/releases/download/v4.0.12/proxmox-backup-client-v4.0.12-$(dpkg --print-architecture).tgz
 tar zxf proxmox-backup-client-*.tgz
 proxmox-backup-client-*/proxmox-backup-client.sh
 ```
