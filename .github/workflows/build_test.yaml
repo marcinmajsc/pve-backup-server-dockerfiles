@@ -15,17 +15,17 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - runs_on: ubuntu-24.04-arm
+          - runs_on: ubuntu-26.04-arm
             arch: arm64
-          - runs_on: ubuntu-24.04
+          - runs_on: ubuntu-26.04
             arch: amd64
     env:
       ARCH: ${{ matrix.arch }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7.0.1
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
+      uses: docker/setup-qemu-action@v4.4.0
     - name: Set repository name
       run:
         echo "REGISTRY=ghcr.io/marcinmajsc/pve-backup-server-dockerfiles" >> $GITHUB_ENV;
@@ -40,14 +40,14 @@ jobs:
       run: ./release.bash "${{ env.REGISTRY }}:${{ env.TAG }}" build-image build-deb
 
     # Push Artifacts to GitHub
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7.0.2
       with:
         name: server-${{ matrix.arch }}
         path: release/
 
     # Push to DockerHub
     - name: Login to Docker Hub
-      uses: docker/login-action@v3
+      uses: docker/login-action@v4.8.0
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
@@ -61,20 +61,20 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - runs_on: ubuntu-24.04-arm
+          - runs_on: ubuntu-26.04-arm
             arch: arm64
-          - runs_on: ubuntu-24.04
+          - runs_on: ubuntu-26.04
             arch: amd64
-          - runs_on: ubuntu-24.04-arm
+          - runs_on: ubuntu-26.04-arm
             arch: arm32
             continue_on_error: true
     env:
       ARCH: ${{ matrix.arch }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7.0.1
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v2
+      uses: docker/setup-qemu-action@v4.4.0
     - name: Set repository name
       run:
         echo "REGISTRY=ghcr.io/marcinmajsc/pve-backup-server-dockerfiles" >> $GITHUB_ENV;
@@ -94,17 +94,17 @@ jobs:
       run: echo "::warning::${{ matrix.arch }} client build failed"
 
     # Push Artifacts to GitHub
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7.0.2
       with:
         name: client-${{ matrix.arch }}
         path: release/
 
   manifest:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     needs: [client-build, docker-build]
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7.0.1
     - name: Set repository name
       run:
         echo "REGISTRY=ghcr.io/marcinmajsc/pve-backup-server-dockerfiles" >> $GITHUB_ENV;
@@ -114,7 +114,7 @@ jobs:
           echo "TAG=ref-${{ github.ref_name }}" >> $GITHUB_ENV;
         fi
     - name: Login to Docker Hub
-      uses: docker/login-action@v3
+      uses: docker/login-action@v4.8.0
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
@@ -126,7 +126,7 @@ jobs:
       env:
         REGISTRY: "ghcr.io/marcinmajsc/pve-backup-server-dockerfiles"
         TAG: ${{ env.TAG }}
-      uses: actions/github-script@v7
+      uses: actions/github-script@v9.0.0
       with:
         script: |
           const imageName = `${{ env.REGISTRY }}:${{ env.TAG }}`;
