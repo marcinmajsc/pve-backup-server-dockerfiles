@@ -53,6 +53,8 @@ CLIENT_IMAGE_TAG="$IMAGE_TAG-client-${CROSS_ARCH:-$ARCH}"
 
 docker_build() {
   DOCKER_BUILDKIT=1 docker build \
+    --provenance=false \
+    --sbom=false \
     --build-arg=ARCH="$ARCH" \
     --build-arg=CROSS_ARCH="$CROSS_ARCH" \
     --build-arg=VERSION="$VERSION" \
