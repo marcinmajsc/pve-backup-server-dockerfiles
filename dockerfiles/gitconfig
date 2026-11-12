@@ -10,3 +10,6 @@
 
 [url "git://git.proxmox.com/git/ui/proxmox-yew-widget-toolkit-assets.git"]
     insteadOf = gitolite3@proxdev.maurer-it.com:yew/proxmox-yew-widget-toolkit-assets
+
+[url "https://github.com/acmesh-official/acme.sh.git"]
+    insteadOf = git://git.proxmox.com/git/mirror_acme.sh
