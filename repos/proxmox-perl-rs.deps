@@ -1,5 +1,5 @@
-proxmox-perl-rs 1021ded9d0898b98d50b9a3bbcb36bf2a3982883 # Wed Nov 11 16:57:50 2026 +0100
-proxmox d4b11fdbc53fa7fd9999e15b8cbaba755ee889f9 # Mon Nov 9 22:18:51 2026 +0100
+proxmox-perl-rs 4a224fa8baaa81e79311008d578b64edbe57e77e # Wed Nov 18 22:09:50 2026 +0100
+proxmox 8d4e3bf7f94758f72a7e33e9f5cd1b565f57e08e # Wed Nov 18 21:37:39 2026 +0100
 proxmox-resource-scheduling ee5fedf98b7e110c5a11bb11cc8e657122065606 # Sat May 31 16:09:19 2025 +0200
 perlmod 3a667956097b361a9ef40fa8a2f6c0e26711b025 # Tue Sep 15 17:07:40 2026 +0200
 proxmox-ve-rs 7a086eb1259f9be4cc94037150d379ff7be190ab # Wed Nov 11 02:02:16 2026 +0100
